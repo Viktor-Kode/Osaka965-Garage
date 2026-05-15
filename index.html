@@ -1,1704 +1,2141 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Osaka965 Garage — Kuwait's Premier Auto Workshop</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Sans+JP:wght@300;400&display=swap" rel="stylesheet">
-<style>
-  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-
-  :root {
-    --black: #0a0a0a;
-    --white: #f5f3ee;
-    --gold: #c9a84c;
-    --gold-light: #e8c97a;
-    --red: #c0392b;
-    --gray-1: #1a1a1a;
-    --gray-2: #2a2a2a;
-    --gray-3: #3d3d3d;
-    --gray-4: #888;
-    --gray-5: #bbb;
-    --font-display: 'Bebas Neue', sans-serif;
-    --font-body: 'DM Sans', sans-serif;
-    --font-jp: 'Noto Sans JP', sans-serif;
-  }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--black);
-    color: var(--white);
-    font-family: var(--font-body);
-    font-size: 16px;
-    line-height: 1.6;
-    overflow-x: hidden;
-  }
-
-  /* ─── NAV ─── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 200;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.75rem 4rem;
-    background: rgba(10,10,10,0.92);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(201,168,76,0.15);
-    transition: padding 0.3s;
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    text-decoration: none;
-    flex-shrink: 0;
-  }
-
-  .logo-img {
-    height: 52px;
-    width: auto;
-    display: block;
-    object-fit: contain;
-  }
-
-  .logo-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.1;
-  }
-
-  .logo-text .name {
-    font-family: var(--font-display);
-    font-size: 22px;
-    letter-spacing: 3px;
-    color: var(--white);
-  }
-
-  .logo-text .sub {
-    font-size: 10px;
-    letter-spacing: 4px;
-    color: var(--gold);
-    text-transform: uppercase;
-    font-weight: 300;
-  }
-
-  .nav-right {
-    display: flex;
-    align-items: center;
-    gap: 2.5rem;
-  }
-
-  .nav-links {
-    display: flex;
-    gap: 2.5rem;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: var(--gray-5);
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 400;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--gold); }
-
-  .nav-cta {
-    background: var(--gold);
-    color: var(--black) !important;
-    padding: 0.5rem 1.25rem;
-    font-weight: 500 !important;
-    letter-spacing: 1.5px !important;
-    transition: background 0.2s, transform 0.1s !important;
-    white-space: nowrap;
-  }
-
-  .nav-cta:hover { background: var(--gold-light) !important; color: var(--black) !important; transform: translateY(-1px); }
-
-  /* Hamburger */
-  .hamburger {
-    display: none;
-    flex-direction: column;
-    gap: 5px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    padding: 6px;
-    z-index: 200;
-    flex-shrink: 0;
-  }
-
-  .hamburger span {
-    display: block;
-    width: 24px;
-    height: 1.5px;
-    background: var(--white);
-    transition: transform 0.3s, opacity 0.3s, width 0.3s;
-    transform-origin: center;
-  }
-
-  .hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-  .hamburger.open span:nth-child(2) { opacity: 0; width: 0; }
-  .hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-  /* Mobile drawer */
-  .mobile-menu {
-    display: none;
-    position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    z-index: 150;
-    background: rgba(10,10,10,0.97);
-    backdrop-filter: blur(16px);
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 0;
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.3s;
-  }
-
-  .mobile-menu.open {
-    display: flex;
-    opacity: 1;
-    pointer-events: all;
-  }
-
-  .mobile-menu-logo {
-    position: absolute;
-    top: 1rem;
-    left: 1.5rem;
-    height: 48px;
-    width: auto;
-  }
-
-  .mobile-nav-links {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0;
-    width: 100%;
-  }
-
-  .mobile-nav-links li {
-    width: 100%;
-    text-align: center;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-  }
-
-  .mobile-nav-links a {
-    display: block;
-    padding: 1.25rem 2rem;
-    color: var(--gray-5);
-    text-decoration: none;
-    font-size: 13px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    font-weight: 400;
-    transition: color 0.2s, background 0.2s;
-  }
-
-  .mobile-nav-links a:hover { color: var(--gold); background: rgba(201,168,76,0.05); }
-
-  .mobile-cta {
-    margin-top: 2rem;
-    background: var(--gold);
-    color: var(--black);
-    padding: 1rem 3rem;
-    font-family: var(--font-body);
-    font-size: 12px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 500;
-    text-decoration: none;
-    transition: background 0.2s;
-  }
-
-  .mobile-cta:hover { background: var(--gold-light); }
-
-  .mobile-contact {
-    margin-top: 1.5rem;
-    font-size: 11px;
-    letter-spacing: 2px;
-    color: var(--gray-4);
-    text-transform: uppercase;
-  }
-
-  .mobile-contact a { color: var(--gold); text-decoration: none; }
-
-  /* ─── HERO ─── */
-  #hero {
-    min-height: 100vh;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-items: center;
-    padding: 8rem 4rem 4rem;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(201,168,76,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(201,168,76,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-  }
-
-  .hero-bg-circle {
-    position: absolute;
-    right: -10%;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 700px;
-    height: 700px;
-    border-radius: 50%;
-    border: 1px solid rgba(201,168,76,0.08);
-    pointer-events: none;
-  }
-
-  .hero-bg-circle::before {
-    content: '';
-    position: absolute;
-    inset: 60px;
-    border-radius: 50%;
-    border: 1px solid rgba(201,168,76,0.06);
-  }
-
-  .hero-content { position: relative; z-index: 2; }
-
-  .hero-eyebrow {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s ease forwards;
-  }
-
-  .eyebrow-line {
-    width: 40px;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  .eyebrow-text {
-    font-size: 11px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 400;
-  }
-
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(72px, 9vw, 130px);
-    line-height: 0.9;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.35s ease forwards;
-  }
-
-  .hero-title .accent { color: var(--gold); }
-
-  .hero-jp {
-    font-family: var(--font-jp);
-    font-size: 13px;
-    color: var(--gray-4);
-    font-weight: 300;
-    letter-spacing: 6px;
-    margin-bottom: 2rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.5s ease forwards;
-  }
-
-  .hero-desc {
-    font-size: 15px;
-    color: var(--gray-5);
-    max-width: 420px;
-    line-height: 1.8;
-    font-weight: 300;
-    margin-bottom: 2.5rem;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.65s ease forwards;
-  }
-
-  .hero-actions {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.8s ease forwards;
-  }
-
-  .btn-primary {
-    display: inline-block;
-    background: var(--gold);
-    color: var(--black);
-    text-decoration: none;
-    padding: 0.85rem 2rem;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 500;
-    transition: background 0.2s, transform 0.15s;
-    font-family: var(--font-body);
-  }
-
-  .btn-primary:hover {
-    background: var(--gold-light);
-    transform: translateY(-2px);
-  }
-
-  .btn-ghost {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    color: var(--gray-5);
-    text-decoration: none;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-weight: 400;
-    border: 1px solid var(--gray-3);
-    padding: 0.85rem 1.75rem;
-    transition: border-color 0.2s, color 0.2s;
-  }
-
-  .btn-ghost:hover { border-color: var(--gold); color: var(--gold); }
-
-  .hero-stats {
-    position: absolute;
-    right: 4rem;
-    bottom: 4rem;
-    display: flex;
-    gap: 3rem;
-    z-index: 2;
-    opacity: 0;
-    animation: fadeUp 0.8s 1s ease forwards;
-  }
-
-  .stat { text-align: center; }
-
-  .stat-num {
-    font-family: var(--font-display);
-    font-size: 48px;
-    color: var(--gold);
-    line-height: 1;
-    letter-spacing: 1px;
-  }
-
-  .stat-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gray-4);
-    font-weight: 300;
-  }
-
-  .hero-visual {
-    position: relative;
-    z-index: 2;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .hero-car-wrap {
-    position: relative;
-    width: 100%;
-    max-width: 580px;
-    opacity: 0;
-    animation: fadeIn 1.2s 0.4s ease forwards;
-  }
-
-  .hero-car-svg {
-    width: 100%;
-    filter: drop-shadow(0 20px 60px rgba(201,168,76,0.15));
-  }
-
-  /* Vertical Japanese text decoration */
-  .jp-vertical {
-    position: absolute;
-    right: -2rem;
-    top: 50%;
-    transform: translateY(-50%);
-    writing-mode: vertical-rl;
-    font-family: var(--font-jp);
-    font-size: 11px;
-    letter-spacing: 8px;
-    color: var(--gray-3);
-    font-weight: 300;
-  }
-
-  /* ─── SECTION COMMON ─── */
-  section { padding: 6rem 4rem; }
-
-  .section-label {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .section-label .line {
-    width: 30px;
-    height: 1px;
-    background: var(--gold);
-  }
-
-  .section-label span {
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 400;
-  }
-
-  .section-title {
-    font-family: var(--font-display);
-    font-size: clamp(42px, 5vw, 72px);
-    line-height: 0.95;
-    letter-spacing: 2px;
-    margin-bottom: 1rem;
-  }
-
-  .section-sub {
-    font-size: 15px;
-    color: var(--gray-5);
-    font-weight: 300;
-    max-width: 480px;
-    line-height: 1.8;
-  }
-
-  /* ─── SERVICES ─── */
-  #services { background: var(--gray-1); }
-
-  .services-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 4rem;
-  }
-
-  .services-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1px;
-    background: var(--gray-3);
-  }
-
-  .service-card {
-    background: var(--gray-1);
-    padding: 2.5rem;
-    position: relative;
-    overflow: hidden;
-    transition: background 0.3s;
-    cursor: default;
-  }
-
-  .service-card::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 2px;
-    background: var(--gold);
-    transform: scaleX(0);
-    transition: transform 0.3s;
-    transform-origin: left;
-  }
-
-  .service-card:hover { background: var(--gray-2); }
-  .service-card:hover::after { transform: scaleX(1); }
-
-  .service-num {
-    font-family: var(--font-display);
-    font-size: 72px;
-    color: rgba(201,168,76,0.07);
-    line-height: 1;
-    position: absolute;
-    top: 1rem;
-    right: 1.5rem;
-    font-weight: 400;
-    transition: color 0.3s;
-  }
-
-  .service-card:hover .service-num { color: rgba(201,168,76,0.12); }
-
-  .service-icon {
-    width: 48px;
-    height: 48px;
-    margin-bottom: 1.5rem;
-    color: var(--gold);
-  }
-
-  .service-name {
-    font-family: var(--font-display);
-    font-size: 28px;
-    letter-spacing: 1px;
-    margin-bottom: 0.75rem;
-  }
-
-  .service-desc {
-    font-size: 13px;
-    color: var(--gray-5);
-    line-height: 1.7;
-    font-weight: 300;
-  }
-
-  .service-list {
-    list-style: none;
-    margin-top: 1.25rem;
-  }
-
-  .service-list li {
-    font-size: 12px;
-    color: var(--gray-4);
-    padding: 0.3rem 0;
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-  }
-
-  .service-list li::before {
-    content: '';
-    width: 4px;
-    height: 1px;
-    background: var(--gold);
-    flex-shrink: 0;
-  }
-
-  /* ─── WHY US ─── */
-  #why {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 6rem;
-    align-items: center;
-    padding: 6rem 4rem;
-  }
-
-  .why-visual {
-    position: relative;
-  }
-
-  .why-badge {
-    position: absolute;
-    bottom: -1.5rem;
-    right: -1.5rem;
-    width: 120px;
-    height: 120px;
-    background: var(--gold);
-    border-radius: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-  }
-
-  .why-badge .num {
-    font-family: var(--font-display);
-    font-size: 36px;
-    color: var(--black);
-    line-height: 1;
-  }
-
-  .why-badge .txt {
-    font-size: 9px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: rgba(10,10,10,0.7);
-    font-weight: 500;
-    max-width: 80px;
-    line-height: 1.3;
-    text-align: center;
-  }
-
-  .frame-box {
-    width: 100%;
-    aspect-ratio: 4/3;
-    background: var(--gray-2);
-    border: 1px solid var(--gray-3);
-    position: relative;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .frame-corner {
-    position: absolute;
-    width: 24px;
-    height: 24px;
-    border-color: var(--gold);
-    border-style: solid;
-    border-width: 0;
-  }
-
-  .frame-corner.tl { top: 12px; left: 12px; border-top-width: 1.5px; border-left-width: 1.5px; }
-  .frame-corner.tr { top: 12px; right: 12px; border-top-width: 1.5px; border-right-width: 1.5px; }
-  .frame-corner.bl { bottom: 12px; left: 12px; border-bottom-width: 1.5px; border-left-width: 1.5px; }
-  .frame-corner.br { bottom: 12px; right: 12px; border-bottom-width: 1.5px; border-right-width: 1.5px; }
-
-  .frame-inner {
-    text-align: center;
-  }
-
-  .frame-inner .big-num {
-    font-family: var(--font-display);
-    font-size: 100px;
-    color: rgba(201,168,76,0.1);
-    line-height: 1;
-    letter-spacing: -4px;
-  }
-
-  .frame-inner .label {
-    font-size: 11px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--gray-4);
-    margin-top: -0.5rem;
-  }
-
-  .why-perks {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
-    margin-top: 2.5rem;
-  }
-
-  .perk {
-    display: flex;
-    gap: 1rem;
-    align-items: flex-start;
-  }
-
-  .perk-icon {
-    width: 32px;
-    height: 32px;
-    border: 1px solid var(--gold);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 2px;
-  }
-
-  .perk-icon svg {
-    width: 16px;
-    height: 16px;
-    stroke: var(--gold);
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .perk-title {
-    font-size: 15px;
-    font-weight: 500;
-    margin-bottom: 0.2rem;
-  }
-
-  .perk-desc {
-    font-size: 13px;
-    color: var(--gray-5);
-    font-weight: 300;
-    line-height: 1.6;
-  }
-
-  /* ─── REVIEWS ─── */
-  #reviews { background: var(--gray-1); }
-
-  .reviews-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 3rem;
-  }
-
-  .rating-display {
-    text-align: right;
-  }
-
-  .rating-big {
-    font-family: var(--font-display);
-    font-size: 64px;
-    color: var(--gold);
-    line-height: 1;
-  }
-
-  .stars {
-    display: flex;
-    gap: 4px;
-    justify-content: flex-end;
-    margin: 0.25rem 0;
-  }
-
-  .star { width: 14px; height: 14px; color: var(--gold); }
-
-  .rating-count {
-    font-size: 11px;
-    color: var(--gray-4);
-    letter-spacing: 2px;
-    text-transform: uppercase;
-  }
-
-  .reviews-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .review-card {
-    background: var(--gray-2);
-    border: 1px solid var(--gray-3);
-    padding: 1.75rem;
-    position: relative;
-    transition: border-color 0.3s;
-  }
-
-  .review-card:hover { border-color: rgba(201,168,76,0.4); }
-
-  .review-card .quote-mark {
-    font-family: var(--font-display);
-    font-size: 60px;
-    color: var(--gold);
-    opacity: 0.2;
-    line-height: 0.8;
-    margin-bottom: 0.5rem;
-    display: block;
-  }
-
-  .review-text {
-    font-size: 13px;
-    color: var(--gray-5);
-    line-height: 1.8;
-    font-weight: 300;
-    font-style: italic;
-    margin-bottom: 1.25rem;
-  }
-
-  .review-author {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--gray-3);
-  }
-
-  .author-avatar {
-    width: 32px;
-    height: 32px;
-    background: var(--gold);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 500;
-    color: var(--black);
-    flex-shrink: 0;
-    font-family: var(--font-body);
-  }
-
-  .author-name {
-    font-size: 13px;
-    font-weight: 500;
-  }
-
-  .author-date {
-    font-size: 11px;
-    color: var(--gray-4);
-  }
-
-  .review-stars {
-    display: flex;
-    gap: 2px;
-    margin-bottom: 0.75rem;
-  }
-
-  .review-stars svg {
-    width: 12px;
-    height: 12px;
-    fill: var(--gold);
-  }
-
-  /* ─── BOOKING ─── */
-  #booking {
-    display: grid;
-    grid-template-columns: 1fr 1.2fr;
-    gap: 6rem;
-    align-items: start;
-    background: var(--black);
-    border-top: 1px solid var(--gray-3);
-  }
-
-  .booking-info h3 {
-    font-family: var(--font-display);
-    font-size: 18px;
-    letter-spacing: 2px;
-    color: var(--gold);
-    margin-bottom: 2.5rem;
-  }
-
-  .info-item {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.75rem;
-  }
-
-  .info-icon {
-    width: 20px;
-    flex-shrink: 0;
-    margin-top: 2px;
-  }
-
-  .info-icon svg {
-    width: 20px;
-    height: 20px;
-    stroke: var(--gold);
-    fill: none;
-    stroke-width: 1.5;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-
-  .info-label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 0.2rem;
-  }
-
-  .info-value {
-    font-size: 14px;
-    color: var(--gray-5);
-    font-weight: 300;
-  }
-
-  .map-placeholder {
-    margin-top: 2rem;
-    background: var(--gray-1);
-    border: 1px solid var(--gray-3);
-    height: 180px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .map-placeholder::before {
-    content: '33W 24 ST · SHUWAIKH INDUSTRIAL · KUWAIT';
-    font-size: 10px;
-    letter-spacing: 3px;
-    color: var(--gray-4);
-    text-align: center;
-  }
-
-  .booking-form { }
-
-  .form-title {
-    font-family: var(--font-display);
-    font-size: 48px;
-    letter-spacing: 2px;
-    margin-bottom: 0.5rem;
-  }
-
-  .form-sub {
-    font-size: 13px;
-    color: var(--gray-5);
-    font-weight: 300;
-    margin-bottom: 2rem;
-  }
-
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1rem;
-    margin-bottom: 1rem;
-  }
-
-  .form-field {
-    display: flex;
-    flex-direction: column;
-    gap: 0.4rem;
-  }
-
-  .form-field.full { grid-column: 1 / -1; }
-
-  .form-field label {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
-    font-weight: 400;
-  }
-
-  .form-field input,
-  .form-field select,
-  .form-field textarea {
-    background: var(--gray-1);
-    border: 1px solid var(--gray-3);
-    color: var(--white);
-    padding: 0.75rem 1rem;
-    font-family: var(--font-body);
-    font-size: 14px;
-    font-weight: 300;
-    outline: none;
-    transition: border-color 0.2s;
-    -webkit-appearance: none;
-    appearance: none;
-  }
-
-  .form-field input:focus,
-  .form-field select:focus,
-  .form-field textarea:focus {
-    border-color: var(--gold);
-  }
-
-  .form-field select option { background: var(--gray-1); }
-
-  .form-field textarea { resize: vertical; min-height: 100px; }
-
-  .form-submit {
-    width: 100%;
-    background: var(--gold);
-    color: var(--black);
-    border: none;
-    padding: 1rem 2rem;
-    font-family: var(--font-body);
-    font-size: 12px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    font-weight: 500;
-    cursor: pointer;
-    transition: background 0.2s, transform 0.15s;
-    margin-top: 0.5rem;
-  }
-
-  .form-submit:hover { background: var(--gold-light); transform: translateY(-1px); }
-
-  .form-note {
-    font-size: 11px;
-    color: var(--gray-4);
-    margin-top: 0.75rem;
-    text-align: center;
-    font-weight: 300;
-  }
-
-  /* ─── FOOTER ─── */
-  footer {
-    background: var(--gray-1);
-    border-top: 1px solid var(--gray-3);
-    padding: 3rem 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  .footer-left .footer-logo {
-    font-family: var(--font-display);
-    font-size: 28px;
-    letter-spacing: 4px;
-    margin-bottom: 0.25rem;
-  }
-
-  .footer-left .footer-copy {
-    font-size: 12px;
-    color: var(--gray-4);
-    font-weight: 300;
-  }
-
-  .footer-mid {
-    display: flex;
-    gap: 2rem;
-  }
-
-  .footer-mid a {
-    font-size: 11px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--gray-4);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
-  .footer-mid a:hover { color: var(--gold); }
-
-  .footer-right {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 0.25rem;
-  }
-
-  .footer-right a {
-    color: var(--gold);
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 400;
-    transition: color 0.2s;
-  }
-
-  .footer-right a:hover { color: var(--gold-light); }
-
-  .footer-right .wa { font-size: 11px; color: var(--gray-4); letter-spacing: 2px; text-transform: uppercase; margin-top: 0.25rem; }
-
-  /* ─── TICKER ─── */
-  .ticker-wrap {
-    background: var(--gold);
-    overflow: hidden;
-    padding: 0.6rem 0;
-    white-space: nowrap;
-  }
-
-  .ticker {
-    display: inline-block;
-    animation: ticker 20s linear infinite;
-  }
-
-  .ticker span {
-    font-family: var(--font-display);
-    font-size: 14px;
-    letter-spacing: 4px;
-    color: var(--black);
-    margin: 0 2rem;
-  }
-
-  @keyframes ticker {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-  }
-
-  /* ─── ANIMATIONS ─── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.7s ease, transform 0.7s ease;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ─── MOBILE ─── */
-  @media (max-width: 900px) {
-    nav { padding: 0.6rem 1.25rem; }
-    .nav-right { display: none; }
-    .hamburger { display: flex; }
-    .logo-img { height: 44px; }
-    .logo-text .name { font-size: 18px; }
-    .logo-text .sub { font-size: 9px; }
-    #hero { grid-template-columns: 1fr; padding: 6rem 1.25rem 8rem; gap: 1.5rem; }
-    .hero-visual { order: -1; }
-    .hero-stats { right: 1.25rem; bottom: 1.5rem; gap: 1.5rem; }
-    .stat-num { font-size: 32px; }
-    .stat-label { font-size: 9px; }
-    .jp-vertical { display: none; }
-    section { padding: 3.5rem 1.25rem; }
-    .services-grid { grid-template-columns: 1fr; }
-    .service-card { padding: 1.75rem; }
-    .reviews-grid { grid-template-columns: 1fr; }
-    #why { grid-template-columns: 1fr; gap: 2rem; padding: 3.5rem 1.25rem; }
-    .why-badge { bottom: -1rem; right: -0.75rem; width: 90px; height: 90px; }
-    .why-badge .num { font-size: 28px; }
-    #booking { grid-template-columns: 1fr; gap: 2rem; }
-    .form-grid { grid-template-columns: 1fr; }
-    .form-title { font-size: 36px; }
-    footer { flex-direction: column; gap: 1.25rem; text-align: center; padding: 2rem 1.25rem; }
-    .footer-right { align-items: center; }
-    .footer-mid { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 1rem 1.5rem; }
-    .services-header { flex-direction: column; align-items: flex-start; gap: 0.75rem; }
-    .reviews-header { flex-direction: column; align-items: flex-start; gap: 1rem; }
-    .rating-display { text-align: left; }
-    .stars { justify-content: flex-start; }
-    .hero-title { font-size: clamp(56px, 16vw, 90px); }
-    .section-title { font-size: clamp(36px, 10vw, 56px); }
-    .section-sub { max-width: 100%; }
-  }
-  @media (max-width: 480px) {
-    .hero-stats { gap: 1rem; }
-    .stat-num { font-size: 28px; }
-    .booking-info { order: 2; }
-    .booking-form { order: 1; }
-  }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Osaka965 Garage — Kuwait's Premier Auto Workshop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Sans+JP:wght@300;400&display=swap"
+    rel="stylesheet">
+  <style>
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --black: #0a0a0a;
+      --white: #f5f3ee;
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --red: #c0392b;
+      --gray-1: #1a1a1a;
+      --gray-2: #2a2a2a;
+      --gray-3: #3d3d3d;
+      --gray-4: #888;
+      --gray-5: #bbb;
+      --font-display: 'Bebas Neue', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-jp: 'Noto Sans JP', sans-serif;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 200;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.75rem 4rem;
+      background: rgba(10, 10, 10, 0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201, 168, 76, 0.15);
+      transition: padding 0.3s;
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+
+    .logo-img {
+      height: 52px;
+      width: auto;
+      display: block;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .logo-text .name {
+      font-family: var(--font-display);
+      font-size: 22px;
+      letter-spacing: 3px;
+      color: var(--white);
+    }
+
+    .logo-text .sub {
+      font-size: 10px;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 2.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--gray-5);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover {
+      color: var(--gold);
+    }
+
+    .nav-cta {
+      background: var(--gold);
+      color: var(--black) !important;
+      padding: 0.5rem 1.25rem;
+      font-weight: 500 !important;
+      letter-spacing: 1.5px !important;
+      transition: background 0.2s, transform 0.1s !important;
+      white-space: nowrap;
+    }
+
+    .nav-cta:hover {
+      background: var(--gold-light) !important;
+      color: var(--black) !important;
+      transform: translateY(-1px);
+    }
+
+    .lang-btn {
+      background: transparent;
+      border: 1px solid var(--gray-3);
+      color: var(--gray-5);
+      padding: 0.4rem 0.75rem;
+      font-size: 11px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      font-family: var(--font-body);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .lang-btn:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    
+    body {
+      top: 0 !important;
+    }
+    
+    .skiptranslate {
+      display: none !important;
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 6px;
+      z-index: 200;
+      flex-shrink: 0;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 1.5px;
+      background: var(--white);
+      transition: transform 0.3s, opacity 0.3s, width 0.3s;
+      transform-origin: center;
+    }
+
+    .hamburger.open span:nth-child(1) {
+      transform: translateY(6.5px) rotate(45deg);
+    }
+
+    .hamburger.open span:nth-child(2) {
+      opacity: 0;
+      width: 0;
+    }
+
+    .hamburger.open span:nth-child(3) {
+      transform: translateY(-6.5px) rotate(-45deg);
+    }
+
+    /* Mobile drawer */
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 150;
+      background: rgba(10, 10, 10, 0.97);
+      backdrop-filter: blur(16px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+
+    .mobile-menu.open {
+      display: flex;
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .mobile-menu-logo {
+      position: absolute;
+      top: 1rem;
+      left: 1.5rem;
+      height: 48px;
+      width: auto;
+    }
+
+    .mobile-nav-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+    }
+
+    .mobile-nav-links li {
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .mobile-nav-links a {
+      display: block;
+      padding: 1.25rem 2rem;
+      color: var(--gray-5);
+      text-decoration: none;
+      font-size: 13px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 400;
+      transition: color 0.2s, background 0.2s;
+    }
+
+    .mobile-nav-links a:hover {
+      color: var(--gold);
+      background: rgba(201, 168, 76, 0.05);
+    }
+
+    .mobile-cta {
+      margin-top: 2rem;
+      background: var(--gold);
+      color: var(--black);
+      padding: 1rem 3rem;
+      font-family: var(--font-body);
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 500;
+      text-decoration: none;
+      transition: background 0.2s;
+    }
+
+    .mobile-cta:hover {
+      background: var(--gold-light);
+    }
+
+    .mobile-contact {
+      margin-top: 1.5rem;
+      font-size: 11px;
+      letter-spacing: 2px;
+      color: var(--gray-4);
+      text-transform: uppercase;
+    }
+
+    .mobile-contact a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      padding: 8rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-bg-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(201, 168, 76, 0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(201, 168, 76, 0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+      pointer-events: none;
+    }
+
+    .hero-bg-circle {
+      position: absolute;
+      right: -10%;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 700px;
+      height: 700px;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 168, 76, 0.08);
+      pointer-events: none;
+    }
+
+    .hero-bg-circle::before {
+      content: '';
+      position: absolute;
+      inset: 60px;
+      border-radius: 50%;
+      border: 1px solid rgba(201, 168, 76, 0.06);
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.2s ease forwards;
+    }
+
+    .eyebrow-line {
+      width: 40px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .eyebrow-text {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(72px, 9vw, 130px);
+      line-height: 0.9;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.35s ease forwards;
+    }
+
+    .hero-title .accent {
+      color: var(--gold);
+    }
+
+    .hero-jp {
+      font-family: var(--font-jp);
+      font-size: 13px;
+      color: var(--gray-4);
+      font-weight: 300;
+      letter-spacing: 6px;
+      margin-bottom: 2rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.5s ease forwards;
+    }
+
+    .hero-desc {
+      font-size: 15px;
+      color: var(--gray-5);
+      max-width: 420px;
+      line-height: 1.8;
+      font-weight: 300;
+      margin-bottom: 2.5rem;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.65s ease forwards;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      opacity: 0;
+      animation: fadeUp 0.8s 0.8s ease forwards;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: var(--black);
+      text-decoration: none;
+      padding: 0.85rem 2rem;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 500;
+      transition: background 0.2s, transform 0.15s;
+      font-family: var(--font-body);
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+    }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gray-5);
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 400;
+      border: 1px solid var(--gray-3);
+      padding: 0.85rem 1.75rem;
+      transition: border-color 0.2s, color 0.2s;
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    .hero-visual {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-circle-layout {
+      position: relative;
+      width: 480px;
+      height: 480px;
+      border-radius: 50%;
+      border: 1px dashed rgba(201, 168, 76, 0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeIn 1.2s 0.4s ease forwards;
+    }
+
+    .hero-image-container {
+      width: 340px;
+      height: 340px;
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid var(--gold);
+      box-shadow: 0 20px 50px rgba(201, 168, 76, 0.15);
+    }
+
+    .hero-car-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .floating-stat {
+      position: absolute;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(201, 168, 76, 0.3);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      z-index: 3;
+    }
+
+    .floating-stat.badge-1 { width: 120px; height: 120px; top: -10px; left: 10px; }
+    .floating-stat.badge-2 { width: 130px; height: 130px; bottom: 30px; right: -20px; }
+    .floating-stat.badge-3 { width: 110px; height: 110px; top: 80px; right: -20px; }
+    .floating-stat.badge-jp {
+      width: 140px; height: 140px;
+      bottom: -20px; left: -10px;
+      font-family: var(--font-jp);
+      font-size: 14px;
+      letter-spacing: 2px;
+      color: var(--gray-4);
+      writing-mode: vertical-rl;
+    }
+
+    .floating-stat .stat-num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--gold);
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .floating-stat .stat-label {
+      font-size: 9px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      line-height: 1.2;
+      padding: 0 8px;
+    }
+
+    /* ─── SECTION COMMON ─── */
+    section {
+      padding: 6rem 4rem;
+    }
+
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-label .line {
+      width: 30px;
+      height: 1px;
+      background: var(--gold);
+    }
+
+    .section-label span {
+      font-size: 10px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(42px, 5vw, 72px);
+      line-height: 0.95;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .section-sub {
+      font-size: 15px;
+      color: var(--gray-5);
+      font-weight: 300;
+      max-width: 480px;
+      line-height: 1.8;
+    }
+
+    /* ─── SERVICES ─── */
+    #services {
+      background: var(--gray-1);
+    }
+
+    .services-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 4rem;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--gray-3);
+    }
+
+    .service-card {
+      background: var(--gray-1);
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
+      cursor: default;
+    }
+
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: var(--gold);
+      transform: scaleX(0);
+      transition: transform 0.3s;
+      transform-origin: left;
+    }
+
+    .service-card:hover {
+      background: var(--gray-2);
+    }
+
+    .service-card:hover::after {
+      transform: scaleX(1);
+    }
+
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 72px;
+      color: rgba(201, 168, 76, 0.07);
+      line-height: 1;
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-weight: 400;
+      transition: color 0.3s;
+    }
+
+    .service-card:hover .service-num {
+      color: rgba(201, 168, 76, 0.12);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+    }
+
+    .service-name {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 1px;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-desc {
+      font-size: 13px;
+      color: var(--gray-5);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    .service-list {
+      list-style: none;
+      margin-top: 1.25rem;
+    }
+
+    .service-list li {
+      font-size: 12px;
+      color: var(--gray-4);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .service-list li::before {
+      content: '';
+      width: 4px;
+      height: 1px;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+
+    /* ─── WHY US ─── */
+    #why {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+      padding: 6rem 4rem;
+    }
+
+    .why-visual {
+      position: relative;
+    }
+
+    .why-badge {
+      position: absolute;
+      bottom: -1.5rem;
+      right: -1.5rem;
+      width: 120px;
+      height: 120px;
+      background: var(--gold);
+      border-radius: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    .why-badge .num {
+      font-family: var(--font-display);
+      font-size: 36px;
+      color: var(--black);
+      line-height: 1;
+    }
+
+    .why-badge .txt {
+      font-size: 9px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: rgba(10, 10, 10, 0.7);
+      font-weight: 500;
+      max-width: 80px;
+      line-height: 1.3;
+      text-align: center;
+    }
+
+    .frame-box {
+      width: 100%;
+      aspect-ratio: 4/3;
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .frame-corner {
+      position: absolute;
+      width: 24px;
+      height: 24px;
+      border-color: var(--gold);
+      border-style: solid;
+      border-width: 0;
+    }
+
+    .frame-corner.tl {
+      top: 12px;
+      left: 12px;
+      border-top-width: 1.5px;
+      border-left-width: 1.5px;
+    }
+
+    .frame-corner.tr {
+      top: 12px;
+      right: 12px;
+      border-top-width: 1.5px;
+      border-right-width: 1.5px;
+    }
+
+    .frame-corner.bl {
+      bottom: 12px;
+      left: 12px;
+      border-bottom-width: 1.5px;
+      border-left-width: 1.5px;
+    }
+
+    .frame-corner.br {
+      bottom: 12px;
+      right: 12px;
+      border-bottom-width: 1.5px;
+      border-right-width: 1.5px;
+    }
+
+    .frame-inner {
+      text-align: center;
+    }
+
+    .frame-inner .big-num {
+      font-family: var(--font-display);
+      font-size: 100px;
+      color: rgba(201, 168, 76, 0.1);
+      line-height: 1;
+      letter-spacing: -4px;
+    }
+
+    .frame-inner .label {
+      font-size: 11px;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      margin-top: -0.5rem;
+    }
+
+    .why-perks {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      margin-top: 2.5rem;
+    }
+
+    .perk {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .perk-icon {
+      width: 32px;
+      height: 32px;
+      border: 1px solid var(--gold);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 2px;
+    }
+
+    .perk-icon svg {
+      width: 16px;
+      height: 16px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .perk-title {
+      font-size: 15px;
+      font-weight: 500;
+      margin-bottom: 0.2rem;
+    }
+
+    .perk-desc {
+      font-size: 13px;
+      color: var(--gray-5);
+      font-weight: 300;
+      line-height: 1.6;
+    }
+
+    /* ─── REVIEWS ─── */
+    #reviews {
+      background: var(--gray-1);
+    }
+
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 3rem;
+    }
+
+    .rating-display {
+      text-align: right;
+    }
+
+    .rating-big {
+      font-family: var(--font-display);
+      font-size: 64px;
+      color: var(--gold);
+      line-height: 1;
+    }
+
+    .stars {
+      display: flex;
+      gap: 4px;
+      justify-content: flex-end;
+      margin: 0.25rem 0;
+    }
+
+    .star {
+      width: 14px;
+      height: 14px;
+      color: var(--gold);
+    }
+
+    .rating-count {
+      font-size: 11px;
+      color: var(--gray-4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+
+    .review-card {
+      background: var(--gray-2);
+      border: 1px solid var(--gray-3);
+      padding: 1.75rem;
+      position: relative;
+      transition: border-color 0.3s;
+    }
+
+    .review-card:hover {
+      border-color: rgba(201, 168, 76, 0.4);
+    }
+
+    .review-card .quote-mark {
+      font-family: var(--font-display);
+      font-size: 60px;
+      color: var(--gold);
+      opacity: 0.2;
+      line-height: 0.8;
+      margin-bottom: 0.5rem;
+      display: block;
+    }
+
+    .review-text {
+      font-size: 13px;
+      color: var(--gray-5);
+      line-height: 1.8;
+      font-weight: 300;
+      font-style: italic;
+      margin-bottom: 1.25rem;
+    }
+
+    .review-author {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding-top: 1rem;
+      border-top: 1px solid var(--gray-3);
+    }
+
+    .author-avatar {
+      width: 32px;
+      height: 32px;
+      background: var(--gold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--black);
+      flex-shrink: 0;
+      font-family: var(--font-body);
+    }
+
+    .author-name {
+      font-size: 13px;
+      font-weight: 500;
+    }
+
+    .author-date {
+      font-size: 11px;
+      color: var(--gray-4);
+    }
+
+    .review-stars {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 0.75rem;
+    }
+
+    .review-stars svg {
+      width: 12px;
+      height: 12px;
+      fill: var(--gold);
+    }
+
+    /* ─── BOOKING ─── */
+    #booking {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 6rem;
+      align-items: start;
+      background: var(--black);
+      border-top: 1px solid var(--gray-3);
+    }
+
+    .booking-info h3 {
+      font-family: var(--font-display);
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+    }
+
+    .info-item {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+    }
+
+    .info-icon {
+      width: 20px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .info-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .info-label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.2rem;
+    }
+
+    .info-value {
+      font-size: 14px;
+      color: var(--gray-5);
+      font-weight: 300;
+    }
+
+    .map-placeholder {
+      margin-top: 2rem;
+      background: var(--gray-1);
+      border: 1px solid var(--gray-3);
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .map-placeholder::before {
+      content: '33W 24 ST · SHUWAIKH INDUSTRIAL · KUWAIT';
+      font-size: 10px;
+      letter-spacing: 3px;
+      color: var(--gray-4);
+      text-align: center;
+    }
+
+    .booking-form {}
+
+    .form-title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      letter-spacing: 2px;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-sub {
+      font-size: 13px;
+      color: var(--gray-5);
+      font-weight: 300;
+      margin-bottom: 2rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+
+    .form-field.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-field label {
+      font-size: 10px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 400;
+    }
+
+    .form-field input,
+    .form-field select,
+    .form-field textarea {
+      background: var(--gray-1);
+      border: 1px solid var(--gray-3);
+      color: var(--white);
+      padding: 0.75rem 1rem;
+      font-family: var(--font-body);
+      font-size: 14px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    .form-field input:focus,
+    .form-field select:focus,
+    .form-field textarea:focus {
+      border-color: var(--gold);
+    }
+
+    .form-field select option {
+      background: var(--gray-1);
+    }
+
+    .form-field textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: var(--black);
+      border: none;
+      padding: 1rem 2rem;
+      font-family: var(--font-body);
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+      margin-top: 0.5rem;
+    }
+
+    .form-submit:hover {
+      background: var(--gold-light);
+      transform: translateY(-1px);
+    }
+
+    .form-note {
+      font-size: 11px;
+      color: var(--gray-4);
+      margin-top: 0.75rem;
+      text-align: center;
+      font-weight: 300;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      background: var(--gray-1);
+      border-top: 1px solid var(--gray-3);
+      padding: 3rem 4rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-left .footer-logo {
+      font-family: var(--font-display);
+      font-size: 28px;
+      letter-spacing: 4px;
+      margin-bottom: 0.25rem;
+    }
+
+    .footer-left .footer-copy {
+      font-size: 12px;
+      color: var(--gray-4);
+      font-weight: 300;
+    }
+
+    .footer-mid {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .footer-mid a {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--gray-4);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-mid a:hover {
+      color: var(--gold);
+    }
+
+    .footer-right {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 0.25rem;
+    }
+
+    .footer-right a {
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 400;
+      transition: color 0.2s;
+    }
+
+    .footer-right a:hover {
+      color: var(--gold-light);
+    }
+
+    .footer-right .wa {
+      font-size: 11px;
+      color: var(--gray-4);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-top: 0.25rem;
+    }
+
+    /* ─── TICKER ─── */
+    .ticker-wrap {
+      background: var(--gold);
+      overflow: hidden;
+      padding: 0.6rem 0;
+      white-space: nowrap;
+    }
+
+    .ticker {
+      display: inline-block;
+      animation: ticker 20s linear infinite;
+    }
+
+    .ticker span {
+      font-family: var(--font-display);
+      font-size: 14px;
+      letter-spacing: 4px;
+      color: var(--black);
+      margin: 0 2rem;
+    }
+
+    @keyframes ticker {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── MOBILE ─── */
+    @media (max-width: 900px) {
+      nav {
+        padding: 0.6rem 1.25rem;
+      }
+
+      .nav-right {
+        display: none;
+      }
+
+      .hamburger {
+        display: flex;
+      }
+
+      .logo-img {
+        height: 44px;
+      }
+
+      .logo-text .name {
+        font-size: 18px;
+      }
+
+      .logo-text .sub {
+        font-size: 9px;
+      }
+
+      #hero {
+        grid-template-columns: 1fr;
+        padding: 6rem 1.25rem 8rem;
+        gap: 1.5rem;
+      }
+
+      .hero-visual {
+        order: 1;
+        margin-top: 2rem;
+      }
+
+      .hero-circle-layout {
+        width: 320px;
+        height: 320px;
+      }
+
+      .hero-image-container {
+        width: 220px;
+        height: 220px;
+      }
+
+      .floating-stat.badge-1 { width: 90px; height: 90px; top: -10px; left: -10px; }
+      .floating-stat.badge-2 { width: 100px; height: 100px; bottom: 0; right: -10px; }
+      .floating-stat.badge-3 { width: 80px; height: 80px; top: 30px; right: -10px; }
+      .floating-stat.badge-jp { width: 100px; height: 100px; bottom: 10px; left: -10px; font-size: 11px; writing-mode: vertical-rl; }
+
+      .floating-stat .stat-num { font-size: 24px; margin-bottom: 2px; }
+      .floating-stat .stat-label { font-size: 8px; letter-spacing: 1px; }
+
+      section {
+        padding: 3.5rem 1.25rem;
+      }
+
+      .services-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .service-card {
+        padding: 1.75rem;
+      }
+
+      .reviews-grid {
+        grid-template-columns: 1fr;
+      }
+
+      #why {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+        padding: 3.5rem 1.25rem;
+      }
+
+      .why-badge {
+        bottom: -1rem;
+        right: -0.75rem;
+        width: 90px;
+        height: 90px;
+      }
+
+      .why-badge .num {
+        font-size: 28px;
+      }
+
+      #booking {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .form-title {
+        font-size: 36px;
+      }
+
+      footer {
+        flex-direction: column;
+        gap: 1.25rem;
+        text-align: center;
+        padding: 2rem 1.25rem;
+      }
+
+      .footer-right {
+        align-items: center;
+      }
+
+      .footer-mid {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 1rem 1.5rem;
+      }
+
+      .services-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.75rem;
+      }
+
+      .reviews-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+      }
+
+      .rating-display {
+        text-align: left;
+      }
+
+      .stars {
+        justify-content: flex-start;
+      }
+
+      .hero-title {
+        font-size: clamp(56px, 16vw, 90px);
+      }
+
+      .section-title {
+        font-size: clamp(36px, 10vw, 56px);
+      }
+
+      .section-sub {
+        max-width: 100%;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .hero-stats {
+        gap: 1rem;
+      }
+
+      .stat-num {
+        font-size: 28px;
+      }
+
+      .booking-info {
+        order: 2;
+      }
+
+      .booking-form {
+        order: 1;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- NAV -->
-<nav id="navbar">
-  <a href="#" class="nav-logo">
-    <img src="https://lh3.googleusercontent.com/p/AF1QipMVQzTvx3vO67fz7VND7myI0i8gV4vQRMbo0EA-=w141-h101-n-k-no-nu" alt="Osaka965 Garage Logo" class="logo-img">
-    <div class="logo-text">
-      <span class="name">OSAKA965</span>
-      <span class="sub">Garage · Kuwait</span>
+  <!-- NAV -->
+  <nav id="navbar">
+    <a href="#" class="nav-logo">
+      <img src="https://lh3.googleusercontent.com/p/AF1QipMVQzTvx3vO67fz7VND7myI0i8gV4vQRMbo0EA-=w141-h101-n-k-no-nu"
+        alt="Osaka965 Garage Logo" class="logo-img">
+      <div class="logo-text">
+        <span class="name">OSAKA965</span>
+        <span class="sub">Garage · Kuwait</span>
+      </div>
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#why">About</a></li>
+        <li><a href="#reviews">Reviews</a></li>
+      </ul>
+      <button class="lang-btn" onclick="toggleLanguage()">عربي / EN</button>
+      <a href="#booking" class="nav-cta nav-links a">Book Now</a>
     </div>
-  </a>
-  <div class="nav-right">
-    <ul class="nav-links">
-      <li><a href="#services">Services</a></li>
-      <li><a href="#why">About</a></li>
-      <li><a href="#reviews">Reviews</a></li>
+    <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- MOBILE DRAWER -->
+  <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+    <img src="https://lh3.googleusercontent.com/p/AF1QipMVQzTvx3vO67fz7VND7myI0i8gV4vQRMbo0EA-=w141-h101-n-k-no-nu"
+      alt="Osaka965 Logo" class="mobile-menu-logo">
+    <ul class="mobile-nav-links">
+      <li><a href="#services" class="mobile-link">Services</a></li>
+      <li><a href="#why" class="mobile-link">About</a></li>
+      <li><a href="#reviews" class="mobile-link">Reviews</a></li>
+      <li><a href="#booking" class="mobile-link">Booking</a></li>
+      <li><button class="lang-btn" onclick="toggleLanguage()" style="margin-top: 1rem;">عربي / EN</button></li>
     </ul>
-    <a href="#booking" class="nav-cta nav-links a">Book Now</a>
-  </div>
-  <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
-    <span></span><span></span><span></span>
-  </button>
-</nav>
-
-<!-- MOBILE DRAWER -->
-<div class="mobile-menu" id="mobileMenu" aria-hidden="true">
-  <img src="https://lh3.googleusercontent.com/p/AF1QipMVQzTvx3vO67fz7VND7myI0i8gV4vQRMbo0EA-=w141-h101-n-k-no-nu" alt="Osaka965 Logo" class="mobile-menu-logo">
-  <ul class="mobile-nav-links">
-    <li><a href="#services" class="mobile-link">Services</a></li>
-    <li><a href="#why" class="mobile-link">About</a></li>
-    <li><a href="#reviews" class="mobile-link">Reviews</a></li>
-    <li><a href="#booking" class="mobile-link">Booking</a></li>
-  </ul>
-  <a href="#booking" class="mobile-cta mobile-link">Book Appointment</a>
-  <div class="mobile-contact">Call / WhatsApp &nbsp;<a href="tel:+96594442015">+965 9444 2015</a></div>
-</div>
-
-<!-- HERO -->
-<section id="hero">
-  <div class="hero-bg-grid"></div>
-  <div class="hero-bg-circle"></div>
-
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <span class="eyebrow-line"></span>
-      <span class="eyebrow-text">Shuwaikh Industrial · Kuwait</span>
-    </div>
-    <h1 class="hero-title">OSAKA<br><span class="accent">965</span><br>GARAGE</h1>
-    <p class="hero-jp">オオサカ ガレージ · クウェート</p>
-    <p class="hero-desc">Kuwait's premier destination for precision auto repair, expert engine tuning, and bespoke car modification. Where performance meets craftsmanship.</p>
-    <div class="hero-actions">
-      <a href="#booking" class="btn-primary">Book Appointment</a>
-      <a href="tel:+96594442015" class="btn-ghost">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.2 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z"/></svg>
-        +965 9444 2015
-      </a>
-    </div>
+    <a href="#booking" class="mobile-cta mobile-link">Book Appointment</a>
+    <div class="mobile-contact">Call / WhatsApp &nbsp;<a href="tel:+96594442015">+965 9444 2015</a></div>
   </div>
 
-  <div class="hero-visual">
-    <div class="hero-car-wrap">
-      <svg class="hero-car-svg" viewBox="0 0 580 320" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="carGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#c9a84c" stop-opacity="0.15"/>
-            <stop offset="100%" stop-color="#c9a84c" stop-opacity="0"/>
-          </linearGradient>
-          <linearGradient id="bodyGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#2a2a2a"/>
-            <stop offset="100%" stop-color="#1a1a1a"/>
-          </linearGradient>
-          <linearGradient id="roofGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#333"/>
-            <stop offset="100%" stop-color="#1d1d1d"/>
-          </linearGradient>
-        </defs>
-        <!-- Ground reflection -->
-        <ellipse cx="290" cy="295" rx="240" ry="12" fill="url(#carGrad)"/>
-        <!-- Shadow ground -->
-        <ellipse cx="290" cy="280" rx="200" ry="6" fill="rgba(0,0,0,0.4)"/>
-        <!-- Main body -->
-        <path d="M 60 210 Q 55 210 52 200 L 50 175 Q 50 165 60 165 L 100 165 L 130 120 Q 145 100 170 95 L 310 88 Q 360 87 390 100 L 440 130 L 500 155 Q 530 160 532 175 L 534 200 Q 534 210 524 210 Z" fill="url(#bodyGrad)" stroke="#3d3d3d" stroke-width="1"/>
-        <!-- Roof / cabin -->
-        <path d="M 145 165 L 165 110 Q 178 95 200 92 L 320 89 Q 355 89 375 105 L 415 140 L 430 165 Z" fill="url(#roofGrad)" stroke="#444" stroke-width="0.5"/>
-        <!-- Windows -->
-        <!-- Front windshield -->
-        <path d="M 168 158 L 185 115 Q 195 100 215 97 L 290 95 L 290 158 Z" fill="rgba(100,150,200,0.12)" stroke="#555" stroke-width="0.75"/>
-        <!-- Rear window -->
-        <path d="M 292 95 L 340 96 Q 368 97 385 112 L 418 145 L 418 158 L 292 158 Z" fill="rgba(100,150,200,0.1)" stroke="#555" stroke-width="0.75"/>
-        <!-- Window divider -->
-        <line x1="290" y1="93" x2="290" y2="165" stroke="#444" stroke-width="1.5"/>
-        <!-- Hood -->
-        <path d="M 60 165 L 145 165 L 145 185 L 60 185 Z" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/>
-        <!-- Hood line detail -->
-        <line x1="80" y1="165" x2="75" y2="185" stroke="#333" stroke-width="0.5"/>
-        <!-- Trunk -->
-        <path d="M 418 165 L 500 165 L 500 185 L 418 185 Z" fill="#222" stroke="#3a3a3a" stroke-width="0.5"/>
-        <!-- Gold accent stripe -->
-        <path d="M 60 195 L 534 195" stroke="#c9a84c" stroke-width="1.5" opacity="0.7"/>
-        <!-- Small gold accents on grille area -->
-        <rect x="55" y="178" width="20" height="3" fill="#c9a84c" rx="1" opacity="0.8"/>
-        <!-- Front grille -->
-        <rect x="52" y="170" width="10" height="22" fill="#1a1a1a" stroke="#c9a84c" stroke-width="0.75" rx="1"/>
-        <!-- Grille lines -->
-        <line x1="55" y1="175" x2="59" y2="175" stroke="#c9a84c" stroke-width="0.5"/>
-        <line x1="55" y1="179" x2="59" y2="179" stroke="#c9a84c" stroke-width="0.5"/>
-        <line x1="55" y1="183" x2="59" y2="183" stroke="#c9a84c" stroke-width="0.5"/>
-        <line x1="55" y1="187" x2="59" y2="187" stroke="#c9a84c" stroke-width="0.5"/>
-        <!-- Rear light -->
-        <rect x="525" y="168" width="8" height="20" fill="#c0392b" rx="1" opacity="0.9"/>
-        <!-- Front wheel well -->
-        <ellipse cx="145" cy="232" rx="52" ry="52" fill="#111" stroke="#333" stroke-width="1"/>
-        <!-- Rear wheel well -->
-        <ellipse cx="415" cy="232" rx="52" ry="52" fill="#111" stroke="#333" stroke-width="1"/>
-        <!-- Front tire -->
-        <ellipse cx="145" cy="232" rx="45" ry="45" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="1.5"/>
-        <!-- Front rim -->
-        <ellipse cx="145" cy="232" rx="28" ry="28" fill="#1e1e1e" stroke="#c9a84c" stroke-width="1"/>
-        <!-- Front rim spokes -->
-        <line x1="145" y1="204" x2="145" y2="260" stroke="#c9a84c" stroke-width="0.75" opacity="0.8"/>
-        <line x1="117" y1="232" x2="173" y2="232" stroke="#c9a84c" stroke-width="0.75" opacity="0.8"/>
-        <line x1="125" y1="212" x2="165" y2="252" stroke="#c9a84c" stroke-width="0.75" opacity="0.6"/>
-        <line x1="165" y1="212" x2="125" y2="252" stroke="#c9a84c" stroke-width="0.75" opacity="0.6"/>
-        <ellipse cx="145" cy="232" rx="10" ry="10" fill="#c9a84c" opacity="0.3"/>
-        <ellipse cx="145" cy="232" rx="5" ry="5" fill="#c9a84c"/>
-        <!-- Rear tire -->
-        <ellipse cx="415" cy="232" rx="45" ry="45" fill="#0d0d0d" stroke="#2a2a2a" stroke-width="1.5"/>
-        <!-- Rear rim -->
-        <ellipse cx="415" cy="232" rx="28" ry="28" fill="#1e1e1e" stroke="#c9a84c" stroke-width="1"/>
-        <!-- Rear rim spokes -->
-        <line x1="415" y1="204" x2="415" y2="260" stroke="#c9a84c" stroke-width="0.75" opacity="0.8"/>
-        <line x1="387" y1="232" x2="443" y2="232" stroke="#c9a84c" stroke-width="0.75" opacity="0.8"/>
-        <line x1="395" y1="212" x2="435" y2="252" stroke="#c9a84c" stroke-width="0.75" opacity="0.6"/>
-        <line x1="435" y1="212" x2="395" y2="252" stroke="#c9a84c" stroke-width="0.75" opacity="0.6"/>
-        <ellipse cx="415" cy="232" rx="10" ry="10" fill="#c9a84c" opacity="0.3"/>
-        <ellipse cx="415" cy="232" rx="5" ry="5" fill="#c9a84c"/>
-        <!-- Bottom sill detail -->
-        <path d="M 100 210 L 365 210 L 365 216 L 100 216 Z" fill="#1a1a1a" stroke="#333" stroke-width="0.5"/>
-        <!-- O965 badge -->
-        <rect x="240" y="200" width="60" height="12" fill="#c9a84c" rx="2"/>
-        <text x="270" y="210" font-family="Bebas Neue, sans-serif" font-size="9" fill="#0a0a0a" text-anchor="middle" letter-spacing="2">OSAKA965</text>
-      </svg>
+  <!-- HERO -->
+  <section id="hero">
+    <div class="hero-bg-grid"></div>
+    <div class="hero-bg-circle"></div>
+
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span class="eyebrow-line"></span>
+        <span class="eyebrow-text">Shuwaikh Industrial · Kuwait</span>
+      </div>
+      <h1 class="hero-title">OSAKA<br><span class="accent">965</span><br>GARAGE</h1>
+      <p class="hero-jp">オオサカ ガレージ · クウェート</p>
+      <p class="hero-desc">Kuwait's premier destination for precision auto repair, expert engine tuning, and bespoke car
+        modification. Where performance meets craftsmanship.</p>
+      <div class="hero-actions">
+        <a href="#booking" class="btn-primary">Book Appointment</a>
+        <a href="tel:+96594442015" class="btn-ghost">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+            stroke-linecap="round" stroke-linejoin="round">
+            <path
+              d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.2 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z" />
+          </svg>
+          +965 9444 2015
+        </a>
+      </div>
     </div>
-    <span class="jp-vertical">精密チューニング</span>
+
+    <div class="hero-visual">
+      <div class="hero-circle-layout">
+        <div class="hero-image-container">
+          <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAF3-8hr5XoZ6q5Q9OqSx7tEtQgYoBMyLDQXD_GXn1D8Ks5Kesya8a3awvHYxtmBrdUuZKoV_Pk3NnipomqHv0YwcS6PqTQcsHJ3stCBG0NTQl9C4CB4whTxwYSyH9rvqqZXn-0=s1024" alt="Osaka965 Hero Car" class="hero-car-img">
+        </div>
+        
+        <div class="floating-stat badge-1">
+          <div class="stat-num">4.2</div>
+          <div class="stat-label">Google Rating</div>
+        </div>
+        <div class="floating-stat badge-2">
+          <div class="stat-num">10+</div>
+          <div class="stat-label">Years Experience</div>
+        </div>
+        <div class="floating-stat badge-3">
+          <div class="stat-num">∞</div>
+          <div class="stat-label">Passion for Cars</div>
+        </div>
+        <div class="floating-stat badge-jp">
+          精密チューニング
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>AUTO REPAIR</span><span>·</span>
+      <span>ENGINE TUNING</span><span>·</span>
+      <span>CAR MODIFICATION</span><span>·</span>
+      <span>PERFORMANCE UPGRADES</span><span>·</span>
+      <span>SHUWAIKH INDUSTRIAL</span><span>·</span>
+      <span>KUWAIT</span><span>·</span>
+      <span>+965 9444 2015</span><span>·</span>
+      <span>AUTO REPAIR</span><span>·</span>
+      <span>ENGINE TUNING</span><span>·</span>
+      <span>CAR MODIFICATION</span><span>·</span>
+      <span>PERFORMANCE UPGRADES</span><span>·</span>
+      <span>SHUWAIKH INDUSTRIAL</span><span>·</span>
+      <span>KUWAIT</span><span>·</span>
+      <span>+965 9444 2015</span><span>·</span>
+    </div>
   </div>
 
-  <div class="hero-stats">
-    <div class="stat">
-      <div class="stat-num">4.2</div>
-      <div class="stat-label">Google Rating</div>
+  <!-- SERVICES -->
+  <section id="services">
+    <div class="services-header reveal">
+      <div>
+        <div class="section-label"><span class="line"></span><span>What We Do</span></div>
+        <h2 class="section-title">OUR<br>SERVICES</h2>
+      </div>
+      <p class="section-sub" style="max-width:320px;">From routine maintenance to full custom builds — precision work on
+        every vehicle, every time.</p>
     </div>
-    <div class="stat">
-      <div class="stat-num">10+</div>
-      <div class="stat-label">Years Experience</div>
-    </div>
-    <div class="stat">
-      <div class="stat-num">∞</div>
-      <div class="stat-label">Passion for Cars</div>
-    </div>
-  </div>
-</section>
 
-<!-- TICKER -->
-<div class="ticker-wrap">
-  <div class="ticker">
-    <span>AUTO REPAIR</span><span>·</span>
-    <span>ENGINE TUNING</span><span>·</span>
-    <span>CAR MODIFICATION</span><span>·</span>
-    <span>PERFORMANCE UPGRADES</span><span>·</span>
-    <span>SHUWAIKH INDUSTRIAL</span><span>·</span>
-    <span>KUWAIT</span><span>·</span>
-    <span>+965 9444 2015</span><span>·</span>
-    <span>AUTO REPAIR</span><span>·</span>
-    <span>ENGINE TUNING</span><span>·</span>
-    <span>CAR MODIFICATION</span><span>·</span>
-    <span>PERFORMANCE UPGRADES</span><span>·</span>
-    <span>SHUWAIKH INDUSTRIAL</span><span>·</span>
-    <span>KUWAIT</span><span>·</span>
-    <span>+965 9444 2015</span><span>·</span>
-  </div>
-</div>
+    <div class="services-grid reveal">
+      <!-- Service 1 -->
+      <div class="service-card">
+        <span class="service-num">01</span>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"
+          stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="3" />
+          <path
+            d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M18.66 18.66l1.41 1.41" />
+        </svg>
+        <h3 class="service-name">AUTO REPAIR & SERVICING</h3>
+        <p class="service-desc">Full-spectrum vehicle repair and preventative maintenance. Diagnostics, mechanical work,
+          and factory-grade servicing.</p>
+        <ul class="service-list">
+          <li>Engine diagnostics & repair</li>
+          <li>Oil change & filter service</li>
+          <li>Brake system overhaul</li>
+          <li>Suspension & alignment</li>
+          <li>Electrical & AC systems</li>
+        </ul>
+      </div>
 
-<!-- SERVICES -->
-<section id="services">
-  <div class="services-header reveal">
-    <div>
-      <div class="section-label"><span class="line"></span><span>What We Do</span></div>
-      <h2 class="section-title">OUR<br>SERVICES</h2>
+      <!-- Service 2 -->
+      <div class="service-card">
+        <span class="service-num">02</span>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 20V10M18 20V4M6 20v-4" />
+          <path d="M3 12h3l2-7 4 14 2-7h3 M2 20h20" />
+        </svg>
+        <h3 class="service-name">ENGINE TUNING</h3>
+        <p class="service-desc">Unlock your engine's true potential. ECU remapping, forced induction, and precision
+          power enhancement for all makes.</p>
+        <ul class="service-list">
+          <li>ECU remapping & dyno tuning</li>
+          <li>Turbocharger installation</li>
+          <li>Intake & exhaust upgrades</li>
+          <li>Fuel system optimization</li>
+          <li>Intercooler & cooling mods</li>
+        </ul>
+      </div>
+
+      <!-- Service 3 -->
+      <div class="service-card">
+        <span class="service-num">03</span>
+        <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25"
+          stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17 5.8 21.3l2.4-7.4L2 9.4h7.6z" />
+        </svg>
+        <h3 class="service-name">CAR MODIFICATION</h3>
+        <p class="service-desc">Full body transformation. From aero kits to custom interiors — your vision, our craft.
+          Built to stand out.</p>
+        <ul class="service-list">
+          <li>Body kits & aero packages</li>
+          <li>Custom paint & wrapping</li>
+          <li>Lowering & stance work</li>
+          <li>Interior customization</li>
+          <li>Lighting & audio upgrades</li>
+        </ul>
+      </div>
     </div>
-    <p class="section-sub" style="max-width:320px;">From routine maintenance to full custom builds — precision work on every vehicle, every time.</p>
-  </div>
+  </section>
 
-  <div class="services-grid reveal">
-    <!-- Service 1 -->
-    <div class="service-card">
-      <span class="service-num">01</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="3"/><path d="M19.07 4.93l-1.41 1.41M5.34 18.66l-1.41 1.41M12 2v2M12 20v2M2 12h2M20 12h2M4.93 4.93l1.41 1.41M18.66 18.66l1.41 1.41"/>
-      </svg>
-      <h3 class="service-name">AUTO REPAIR & SERVICING</h3>
-      <p class="service-desc">Full-spectrum vehicle repair and preventative maintenance. Diagnostics, mechanical work, and factory-grade servicing.</p>
-      <ul class="service-list">
-        <li>Engine diagnostics & repair</li>
-        <li>Oil change & filter service</li>
-        <li>Brake system overhaul</li>
-        <li>Suspension & alignment</li>
-        <li>Electrical & AC systems</li>
+  <!-- WHY OSAKA965 -->
+  <section id="why">
+    <div class="why-visual reveal">
+      <img
+        src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAGXj7vYr_DBihgE-J892Q21C3imtmEdd1_bxRsvCwVR91EYkTRaPzX03Dm0xhF9fwUW-OkxOz4KW9pClHx2YeDk1A-JKegka4UL8GTzqxk412wV-nQr-fbTYeqvkrvJ6oM8MChX=s1360-w1360-h1020-rw"
+        alt="Osaka965 Garage Service"
+        style="width: 100%; max-width: 500px; height: auto; object-fit: cover; border-radius: 8px;">
+      <div class="why-badge">
+        <span class="num">4.2</span>
+        <span class="txt">Google Reviews</span>
+      </div>
+    </div>
+
+    <div class="why-content reveal">
+      <div class="section-label"><span class="line"></span><span>Why Choose Us</span></div>
+      <h2 class="section-title">BUILT ON<br>PRECISION</h2>
+      <p class="section-sub">Osaka965 Garage has earned Kuwait's trust through meticulous craftsmanship, transparent
+        service, and an obsession with automotive excellence.</p>
+
+      <ul class="why-perks">
+        <li class="perk">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 2a10 10 0 110 20A10 10 0 0112 2zM9 12l2 2 4-4" />
+            </svg>
+          </div>
+          <div>
+            <div class="perk-title">Factory-Level Diagnostics</div>
+            <div class="perk-desc">State-of-the-art diagnostic equipment for every make and model. We find the problem
+              right — the first time.</div>
+          </div>
+        </li>
+        <li class="perk">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+            </svg>
+          </div>
+          <div>
+            <div class="perk-title">Trusted by Kuwait's Enthusiasts</div>
+            <div class="perk-desc">From daily drivers to weekend builds — a loyal community of car lovers across Kuwait
+              trust Osaka965.</div>
+          </div>
+        </li>
+        <li class="perk">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24">
+              <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+            </svg>
+          </div>
+          <div>
+            <div class="perk-title">Performance Specialists</div>
+            <div class="perk-desc">Deep expertise in JDM and European performance — tuning, modifying, and building
+              vehicles that perform as good as they look.</div>
+          </div>
+        </li>
+        <li class="perk">
+          <div class="perk-icon">
+            <svg viewBox="0 0 24 24">
+              <path
+                d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75" />
+            </svg>
+          </div>
+          <div>
+            <div class="perk-title">Transparent & Fair Pricing</div>
+            <div class="perk-desc">Clear estimates before we start. No hidden fees, no surprises. Just honest pricing
+              for quality work.</div>
+          </div>
+        </li>
       </ul>
     </div>
+  </section>
 
-    <!-- Service 2 -->
-    <div class="service-card">
-      <span class="service-num">02</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 20V10M18 20V4M6 20v-4"/><path d="M3 12h3l2-7 4 14 2-7h3 M2 20h20"/>
-      </svg>
-      <h3 class="service-name">ENGINE TUNING</h3>
-      <p class="service-desc">Unlock your engine's true potential. ECU remapping, forced induction, and precision power enhancement for all makes.</p>
-      <ul class="service-list">
-        <li>ECU remapping & dyno tuning</li>
-        <li>Turbocharger installation</li>
-        <li>Intake & exhaust upgrades</li>
-        <li>Fuel system optimization</li>
-        <li>Intercooler & cooling mods</li>
-      </ul>
-    </div>
-
-    <!-- Service 3 -->
-    <div class="service-card">
-      <span class="service-num">03</span>
-      <svg class="service-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 2l2.4 7.4H22l-6.2 4.5 2.4 7.4L12 17 5.8 21.3l2.4-7.4L2 9.4h7.6z"/>
-      </svg>
-      <h3 class="service-name">CAR MODIFICATION</h3>
-      <p class="service-desc">Full body transformation. From aero kits to custom interiors — your vision, our craft. Built to stand out.</p>
-      <ul class="service-list">
-        <li>Body kits & aero packages</li>
-        <li>Custom paint & wrapping</li>
-        <li>Lowering & stance work</li>
-        <li>Interior customization</li>
-        <li>Lighting & audio upgrades</li>
-      </ul>
-    </div>
-  </div>
-</section>
-
-<!-- WHY OSAKA965 -->
-<section id="why">
-  <div class="why-visual reveal">
-    <img src="https://lh3.googleusercontent.com/gps-cs-s/APNQkAGXj7vYr_DBihgE-J892Q21C3imtmEdd1_bxRsvCwVR91EYkTRaPzX03Dm0xhF9fwUW-OkxOz4KW9pClHx2YeDk1A-JKegka4UL8GTzqxk412wV-nQr-fbTYeqvkrvJ6oM8MChX=s1360-w1360-h1020-rw" alt="Osaka965 Garage Service" style="width: 100%; max-width: 500px; height: auto; object-fit: cover; border-radius: 8px;">
-    <div class="why-badge">
-      <span class="num">4.2</span>
-      <span class="txt">Google Reviews</span>
-    </div>
-  </div>
-
-  <div class="why-content reveal">
-    <div class="section-label"><span class="line"></span><span>Why Choose Us</span></div>
-    <h2 class="section-title">BUILT ON<br>PRECISION</h2>
-    <p class="section-sub">Osaka965 Garage has earned Kuwait's trust through meticulous craftsmanship, transparent service, and an obsession with automotive excellence.</p>
-
-    <ul class="why-perks">
-      <li class="perk">
-        <div class="perk-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 110 20A10 10 0 0112 2zM9 12l2 2 4-4"/></svg>
-        </div>
-        <div>
-          <div class="perk-title">Factory-Level Diagnostics</div>
-          <div class="perk-desc">State-of-the-art diagnostic equipment for every make and model. We find the problem right — the first time.</div>
-        </div>
-      </li>
-      <li class="perk">
-        <div class="perk-icon">
-          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-        </div>
-        <div>
-          <div class="perk-title">Trusted by Kuwait's Enthusiasts</div>
-          <div class="perk-desc">From daily drivers to weekend builds — a loyal community of car lovers across Kuwait trust Osaka965.</div>
-        </div>
-      </li>
-      <li class="perk">
-        <div class="perk-icon">
-          <svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
-        </div>
-        <div>
-          <div class="perk-title">Performance Specialists</div>
-          <div class="perk-desc">Deep expertise in JDM and European performance — tuning, modifying, and building vehicles that perform as good as they look.</div>
-        </div>
-      </li>
-      <li class="perk">
-        <div class="perk-icon">
-          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2M9 11a4 4 0 100-8 4 4 0 000 8zM23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
-        </div>
-        <div>
-          <div class="perk-title">Transparent & Fair Pricing</div>
-          <div class="perk-desc">Clear estimates before we start. No hidden fees, no surprises. Just honest pricing for quality work.</div>
-        </div>
-      </li>
-    </ul>
-  </div>
-</section>
-
-<!-- REVIEWS -->
-<section id="reviews">
-  <div class="reviews-header reveal">
-    <div>
-      <div class="section-label"><span class="line"></span><span>Google Reviews</span></div>
-      <h2 class="section-title">WHAT CLIENTS SAY</h2>
-    </div>
-    <div class="rating-display">
-      <div class="rating-big">4.2</div>
-      <div class="stars">
-        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg class="star" viewBox="0 0 24 24" fill="currentColor"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg class="star" viewBox="0 0 24 24" fill="currentColor" opacity="0.35"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-      </div>
-      <div class="rating-count">Based on Google Reviews</div>
-    </div>
-  </div>
-
-  <div class="reviews-grid reveal">
-    <div class="review-card">
-      <span class="quote-mark">"</span>
-      <div class="review-stars">
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-      </div>
-      <p class="review-text">Best garage in Shuwaikh. They tuned my car perfectly and the result was beyond what I expected. Very professional team with great attention to detail.</p>
-      <div class="review-author">
-        <div class="author-avatar">AK</div>
-        <div>
-          <div class="author-name">Ahmad K.</div>
-          <div class="author-date">Kuwait · Google Review</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="review-card">
-      <span class="quote-mark">"</span>
-      <div class="review-stars">
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-      </div>
-      <p class="review-text">Took my modified car here for servicing. They understood exactly what had been done to the car and knew how to handle it properly. Rare to find that level of knowledge in Kuwait.</p>
-      <div class="review-author">
-        <div class="author-avatar">FM</div>
-        <div>
-          <div class="author-name">Fahad M.</div>
-          <div class="author-date">Kuwait · Google Review</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="review-card">
-      <span class="quote-mark">"</span>
-      <div class="review-stars">
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-        <svg viewBox="0 0 24 24"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>
-      </div>
-      <p class="review-text">Amazing modification work on my car. The body kit installation was flawless. The team is passionate about cars and it shows in every detail of the work they deliver.</p>
-      <div class="review-author">
-        <div class="author-avatar">SA</div>
-        <div>
-          <div class="author-name">Sultan A.</div>
-          <div class="author-date">Kuwait · Google Review</div>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- BOOKING -->
-<section id="booking">
-  <div class="booking-info reveal">
-    <h3>FIND US</h3>
-
-    <div class="info-item">
-      <div class="info-icon">
-        <svg viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-      </div>
+  <!-- REVIEWS -->
+  <section id="reviews">
+    <div class="reviews-header reveal">
       <div>
-        <div class="info-label">Address</div>
-        <div class="info-value">33W 24 Street<br>Shuwaikh Industrial, Kuwait</div>
+        <div class="section-label"><span class="line"></span><span>Google Reviews</span></div>
+        <h2 class="section-title">WHAT CLIENTS SAY</h2>
+      </div>
+      <div class="rating-display">
+        <div class="rating-big">4.2</div>
+        <div class="stars">
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg class="star" viewBox="0 0 24 24" fill="currentColor" opacity="0.35">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+        </div>
+        <div class="rating-count">Based on Google Reviews</div>
       </div>
     </div>
 
-    <div class="info-item">
-      <div class="info-icon">
-        <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.2 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z"/></svg>
+    <div class="reviews-grid reveal">
+      <div class="review-card">
+        <span class="quote-mark">"</span>
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+        </div>
+        <p class="review-text">Best garage in Shuwaikh. They tuned my car perfectly and the result was beyond what I
+          expected. Very professional team with great attention to detail.</p>
+        <div class="review-author">
+          <div class="author-avatar">AK</div>
+          <div>
+            <div class="author-name">Ahmad K.</div>
+            <div class="author-date">Kuwait · Google Review</div>
+          </div>
+        </div>
       </div>
-      <div>
-        <div class="info-label">Phone / WhatsApp</div>
-        <div class="info-value"><a href="tel:+96594442015" style="color:var(--gold);text-decoration:none;">+965 9444 2015</a></div>
+
+      <div class="review-card">
+        <span class="quote-mark">"</span>
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+        </div>
+        <p class="review-text">Took my modified car here for servicing. They understood exactly what had been done to
+          the car and knew how to handle it properly. Rare to find that level of knowledge in Kuwait.</p>
+        <div class="review-author">
+          <div class="author-avatar">FM</div>
+          <div>
+            <div class="author-name">Fahad M.</div>
+            <div class="author-date">Kuwait · Google Review</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <span class="quote-mark">"</span>
+        <div class="review-stars">
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+          <svg viewBox="0 0 24 24">
+            <polygon
+              points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26" />
+          </svg>
+        </div>
+        <p class="review-text">Amazing modification work on my car. The body kit installation was flawless. The team is
+          passionate about cars and it shows in every detail of the work they deliver.</p>
+        <div class="review-author">
+          <div class="author-avatar">SA</div>
+          <div>
+            <div class="author-name">Sultan A.</div>
+            <div class="author-date">Kuwait · Google Review</div>
+          </div>
+        </div>
       </div>
     </div>
+  </section>
 
-    <div class="info-item">
-      <div class="info-icon">
-        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-      </div>
-      <div>
-        <div class="info-label">Hours</div>
-        <div class="info-value">Saturday – Thursday<br>9:30 AM – Close<br><span style="font-size:12px;color:var(--gray-4);">Friday: Closed</span></div>
+  <!-- BRANDS -->
+  <section id="brands" style="background: var(--gray-2); border-top: 1px solid var(--gray-3); padding-top: 5rem; padding-bottom: 5rem; text-align: center;">
+    <div class="reveal">
+      <div class="section-label" style="justify-content: center;"><span class="line"></span><span>All Car Brands Service</span><span class="line"></span></div>
+      <h2 class="section-title" style="font-size: clamp(32px, 5vw, 48px); margin-bottom: 1.5rem;">WE WORK WITH ALL CAR BRANDS</h2>
+      
+      <p class="section-sub" style="margin: 0 auto 1.5rem; max-width: 600px; color: var(--gray-4);">
+        Professional service for Range Rover, Honda, Kia, GMC, Nissan, BMW and all other car brands.
+      </p>
+      
+      <p class="section-sub" style="margin: 0 auto 4rem; max-width: 900px; font-size: 14px; color: var(--gray-5); direction: rtl; line-height: 1.8;">
+        كراج متنقل الكويت - تصليح جميع أنواع السيارات - Mobile Auto Repair Shop Kuwait - All Car Brands Service - Mercedes, BMW, Maserati, Jaguar, Lexus, Dodge, Infiniti, Porsche, Ford, Kia, Audi, Ferrari, Range Rover, Toyota, Honda, GMC, Nissan
+      </p>
+
+      <style>
+        .brands-grid {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 3.5rem;
+          max-width: 1100px;
+          margin: 0 auto;
+          align-items: center;
+        }
+        .brands-grid img {
+          height: 60px;
+          transition: transform 0.3s, filter 0.3s;
+          filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
+        }
+        .brands-grid span {
+          font-family: var(--font-display);
+          font-size: 28px;
+          letter-spacing: 2px;
+          color: rgba(255,255,255,0.8);
+          transition: color 0.3s, transform 0.3s;
+        }
+        .brands-grid img:hover {
+          transform: translateY(-4px) scale(1.05);
+          filter: drop-shadow(0 0 12px rgba(201, 168, 76, 0.4));
+        }
+        .brands-grid span:hover {
+          color: var(--gold);
+          transform: translateY(-4px) scale(1.05);
+        }
+        @media (max-width: 768px) {
+          .brands-grid { gap: 2.5rem; }
+          .brands-grid img { height: 44px; }
+          .brands-grid span { font-size: 22px; }
+        }
+      </style>
+
+      <div class="brands-grid">
+        <img src="https://cdn.simpleicons.org/mercedes" alt="Mercedes">
+        <img src="https://cdn.simpleicons.org/bmw" alt="BMW">
+        <img src="https://cdn.simpleicons.org/porsche" alt="Porsche">
+        <img src="https://cdn.simpleicons.org/ford" alt="Ford">
+        <img src="https://cdn.simpleicons.org/kia" alt="Kia">
+        <img src="https://cdn.simpleicons.org/audi" alt="Audi">
+        <img src="https://cdn.simpleicons.org/ferrari" alt="Ferrari">
+        <img src="https://cdn.simpleicons.org/landrover" alt="Range Rover">
+        <img src="https://cdn.simpleicons.org/toyota" alt="Toyota">
+        <img src="https://cdn.simpleicons.org/honda" alt="Honda">
+        <img src="https://cdn.simpleicons.org/nissan" alt="Nissan">
+        <img src="https://cdn.simpleicons.org/dodge" alt="Dodge" onerror="this.style.display='none'">
+        <img src="https://cdn.simpleicons.org/tesla" alt="Tesla" onerror="this.style.display='none'">
+        <img src="https://cdn.simpleicons.org/chevrolet" alt="Chevrolet" onerror="this.style.display='none'">
+        <img src="https://cdn.simpleicons.org/volkswagen" alt="Volkswagen" onerror="this.style.display='none'">
+        <img src="https://cdn.simpleicons.org/hyundai" alt="Hyundai" onerror="this.style.display='none'">
+        <img src="https://cdn.simpleicons.org/jeep" alt="Jeep" onerror="this.style.display='none'">
+        <span>MASERATI</span>
+        <span>JAGUAR</span>
+        <span>LEXUS</span>
+        <span>INFINITI</span>
+        <span>GMC</span>
       </div>
     </div>
+  </section>
 
-    <div class="map-placeholder"></div>
-  </div>
+  <!-- BOOKING -->
+  <section id="booking">
+    <div class="booking-info reveal">
+      <h3>FIND US</h3>
 
-  <div class="booking-form reveal">
-    <h2 class="form-title">BOOK<br>APPOINTMENT</h2>
-    <p class="form-sub">Fill in your details and we'll confirm your slot within 24 hours.</p>
-
-    <form onsubmit="handleSubmit(event)">
-      <div class="form-grid">
-        <div class="form-field">
-          <label for="fname">First Name</label>
-          <input type="text" id="fname" placeholder="Ahmad" required>
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0118 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg>
         </div>
-        <div class="form-field">
-          <label for="phone">Phone / WhatsApp</label>
-          <input type="tel" id="phone" placeholder="+965 XXXX XXXX" required>
-        </div>
-        <div class="form-field">
-          <label for="car">Car Make & Model</label>
-          <input type="text" id="car" placeholder="e.g. Nissan GTR 2015">
-        </div>
-        <div class="form-field">
-          <label for="service">Service Needed</label>
-          <select id="service">
-            <option value="">Select a service...</option>
-            <option>Auto Repair & Servicing</option>
-            <option>Engine Tuning</option>
-            <option>Car Modification</option>
-            <option>Performance Upgrade</option>
-            <option>Other / Unsure</option>
-          </select>
-        </div>
-        <div class="form-field">
-          <label for="date">Preferred Date</label>
-          <input type="date" id="date">
-        </div>
-        <div class="form-field">
-          <label for="time">Preferred Time</label>
-          <select id="time">
-            <option>9:30 AM</option>
-            <option>11:00 AM</option>
-            <option>1:00 PM</option>
-            <option>3:00 PM</option>
-          </select>
-        </div>
-        <div class="form-field full">
-          <label for="notes">Notes / Details</label>
-          <textarea id="notes" placeholder="Describe the issue or what you'd like done..."></textarea>
+        <div>
+          <div class="info-label">Address</div>
+          <div class="info-value">33W 24 Street<br>Shuwaikh Industrial, Kuwait</div>
         </div>
       </div>
-      <button type="submit" class="form-submit">Confirm Booking Request</button>
-      <p class="form-note">Or WhatsApp us directly at +965 9444 2015 for faster response</p>
-    </form>
-  </div>
-</section>
 
-<!-- FOOTER -->
-<footer>
-  <div class="footer-left">
-    <div class="footer-logo">OSAKA965</div>
-    <div class="footer-copy">© 2025 Osaka965 Garage. All rights reserved.<br>Shuwaikh Industrial, Kuwait.</div>
-  </div>
-  
-  <div class="footer-right">
-    <a href="tel:+96594442015">+965 9444 2015</a>
-    <span class="wa">Call or WhatsApp</span>
-  </div>
-</footer>
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24">
+            <path
+              d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.2 2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 14v2.92z" />
+          </svg>
+        </div>
+        <div>
+          <div class="info-label">Phone / WhatsApp</div>
+          <div class="info-value"><a href="tel:+96594442015" style="color:var(--gold);text-decoration:none;">+965 9444
+              2015</a></div>
+        </div>
+      </div>
 
-<script>
-  const reveals = document.querySelectorAll('.reveal');
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        e.target.classList.add('visible');
-        io.unobserve(e.target);
-      }
+      <div class="info-item">
+        <div class="info-icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10" />
+            <polyline points="12 6 12 12 16 14" />
+          </svg>
+        </div>
+        <div>
+          <div class="info-label">Hours</div>
+          <div class="info-value">Saturday – Thursday<br>9:30 AM – Close<br><span
+              style="font-size:12px;color:var(--gray-4);">Friday: Closed</span></div>
+        </div>
+      </div>
+
+      <div class="map-placeholder"></div>
+    </div>
+
+    <div class="booking-form reveal">
+      <h2 class="form-title">BOOK<br>APPOINTMENT</h2>
+      <p class="form-sub">Fill in your details and we'll confirm your slot within 24 hours.</p>
+
+      <form onsubmit="handleSubmit(event)">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="fname">First Name</label>
+            <input type="text" id="fname" placeholder="Ahmad" required>
+          </div>
+          <div class="form-field">
+            <label for="phone">Phone / WhatsApp</label>
+            <input type="tel" id="phone" placeholder="+965 XXXX XXXX" required>
+          </div>
+          <div class="form-field">
+            <label for="car">Car Make & Model</label>
+            <input type="text" id="car" placeholder="e.g. Nissan GTR 2015">
+          </div>
+          <div class="form-field">
+            <label for="service">Service Needed</label>
+            <select id="service">
+              <option value="">Select a service...</option>
+              <option>Auto Repair & Servicing</option>
+              <option>Engine Tuning</option>
+              <option>Car Modification</option>
+              <option>Performance Upgrade</option>
+              <option>Other / Unsure</option>
+            </select>
+          </div>
+          <div class="form-field">
+            <label for="date">Preferred Date</label>
+            <input type="date" id="date">
+          </div>
+          <div class="form-field">
+            <label for="time">Preferred Time</label>
+            <select id="time">
+              <option>9:30 AM</option>
+              <option>11:00 AM</option>
+              <option>1:00 PM</option>
+              <option>3:00 PM</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label for="notes">Notes / Details</label>
+            <textarea id="notes" placeholder="Describe the issue or what you'd like done..."></textarea>
+          </div>
+        </div>
+        <button type="submit" class="form-submit">Confirm Booking Request</button>
+        <p class="form-note">Or WhatsApp us directly at +965 9444 2015 for faster response</p>
+      </form>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-left">
+      <div class="footer-logo">OSAKA965</div>
+      <div class="footer-copy">© 2025 Osaka965 Garage. All rights reserved.<br>Shuwaikh Industrial, Kuwait.</div>
+    </div>
+
+    <div class="footer-right">
+      <a href="tel:+96594442015">+965 9444 2015</a>
+      <span class="wa">Call or WhatsApp</span>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(r => io.observe(r));
+
+    // Hamburger menu
+    const hamburger = document.getElementById('hamburger');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const mobileLinks = document.querySelectorAll('.mobile-link');
+
+    function openMenu() {
+      hamburger.classList.add('open');
+      mobileMenu.classList.add('open');
+      hamburger.setAttribute('aria-expanded', 'true');
+      mobileMenu.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      hamburger.setAttribute('aria-expanded', 'false');
+      mobileMenu.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+    }
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.contains('open') ? closeMenu() : openMenu();
     });
-  }, { threshold: 0.12 });
-  reveals.forEach(r => io.observe(r));
 
-  // Hamburger menu
-  const hamburger = document.getElementById('hamburger');
-  const mobileMenu = document.getElementById('mobileMenu');
-  const mobileLinks = document.querySelectorAll('.mobile-link');
+    mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
 
-  function openMenu() {
-    hamburger.classList.add('open');
-    mobileMenu.classList.add('open');
-    hamburger.setAttribute('aria-expanded', 'true');
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-  }
+    function handleSubmit(e) {
+      e.preventDefault();
+      const btn = e.target.querySelector('.form-submit');
+      const name = document.getElementById('fname').value;
+      const phone = document.getElementById('phone').value;
+      const car = document.getElementById('car').value;
+      const service = document.getElementById('service').value;
+      const date = document.getElementById('date').value;
+      const notes = document.getElementById('notes').value;
+      const msg = `New booking request from Osaka965 website:%0AName: ${name}%0APhone: ${phone}%0ACar: ${car}%0AService: ${service}%0ADate: ${date}%0ANotes: ${notes}`;
+      btn.textContent = 'Redirecting to WhatsApp...';
+      btn.style.background = '#888';
+      setTimeout(() => {
+        window.open(`https://wa.me/96594442015?text=${msg}`, '_blank');
+        btn.textContent = 'Confirm Booking Request';
+        btn.style.background = '';
+        e.target.reset();
+      }, 800);
+    }
 
-  function closeMenu() {
-    hamburger.classList.remove('open');
-    mobileMenu.classList.remove('open');
-    hamburger.setAttribute('aria-expanded', 'false');
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-  }
+    function toggleLanguage() {
+      var combo = document.querySelector('.goog-te-combo');
+      if (combo) {
+        // Toggle between Arabic and default (English)
+        if (combo.value === 'ar') {
+          combo.value = 'en';
+        } else {
+          combo.value = 'ar';
+        }
+        combo.dispatchEvent(new Event('change'));
+      } else {
+        alert("Translation service is still loading, please try again in a few seconds.");
+      }
+    }
+  </script>
 
-  hamburger.addEventListener('click', () => {
-    hamburger.classList.contains('open') ? closeMenu() : openMenu();
-  });
-
-  mobileLinks.forEach(link => link.addEventListener('click', closeMenu));
-
-  function handleSubmit(e) {
-    e.preventDefault();
-    const btn = e.target.querySelector('.form-submit');
-    const name = document.getElementById('fname').value;
-    const phone = document.getElementById('phone').value;
-    const car = document.getElementById('car').value;
-    const service = document.getElementById('service').value;
-    const date = document.getElementById('date').value;
-    const notes = document.getElementById('notes').value;
-    const msg = `New booking request from Osaka965 website:%0AName: ${name}%0APhone: ${phone}%0ACar: ${car}%0AService: ${service}%0ADate: ${date}%0ANotes: ${notes}`;
-    btn.textContent = 'Redirecting to WhatsApp...';
-    btn.style.background = '#888';
-    setTimeout(() => {
-      window.open(`https://wa.me/96594442015?text=${msg}`, '_blank');
-      btn.textContent = 'Confirm Booking Request';
-      btn.style.background = '';
-      e.target.reset();
-    }, 800);
-  }
-</script>
+  <!-- Keep widget rendered but invisible to allow combo box manipulation on file:// -->
+  <div id="google_translate_element" style="position: absolute; top: -100px; left: -100px; opacity: 0; z-index: -1;"></div>
+  <script type="text/javascript">
+    function googleTranslateElementInit() {
+      new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        includedLanguages: 'ar,en',
+        autoDisplay: false
+      }, 'google_translate_element');
+    }
+  </script>
+  <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 
 </body>
+
 </html>
